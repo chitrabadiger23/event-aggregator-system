@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Events</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+    margin: 0;
+}
+
+/* 🔥 TOP BAR */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+/* FILTERS */
+.filters a {
+    margin-right: 10px;
+    padding: 10px 15px;
+    background: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.filters a:hover {
+    background: skyblue;
+    color: black;
+}
+
+/* SEARCH */
+.search-box input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid gray;
+}
+
+.search-box button {
+    padding: 8px 12px;
+    margin-left: 5px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 6px;
+}
+
+/* GRID */
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+/* CARD */
+.card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card h3 {
+    padding: 10px;
+}
+
+.card p {
+    padding: 0 10px;
+    color: #555;
+}
+
+.desc {
+    font-size: 14px;
+    color: gray;
+    padding: 10px;
+}
+
+.btn {
+    display: block;
+    margin: 10px;
+    padding: 10px;
+    background: #e74c3c;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+/* MESSAGE */
+.no-data {
+    text-align: center;
+    font-size: 22px;
+    margin-top: 50px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔥 TOP BAR -->
+<div class="top-bar">
+
+    <!-- LEFT FILTER -->
+    <div class="filters">
+        <a href="/events">All</a>
+        <a href="/events?filter=tomorrow">Tomorrow</a>
+        <a href="/events?filter=week">This Week</a>
+        <a href="/events?filter=month">This Month</a>
+    </div>
+
+    <!-- RIGHT SEARCH -->
+    <div class="search-box">
+        <form method="GET" action="/events">
+            <input type="text" name="search" placeholder="Search events...">
+
+            <!-- 🔥 KEEP FILTER -->
+            <input type="hidden" name="filter" value="{{ request.args.get('filter', '') }}">
+
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+</div>
+
+<!-- 🔥 EVENTS -->
+{% if events|length == 0 %}
+    <div class="no-data">No events found 😔</div>
+{% else %}
+<div class="container">
+
+{% for event in events %}
+<div class="card">
+
+    <img src="{{ event[4] if event[4] else '/static/default.jpg' }}">
+
+    <h3>{{ event[0] }}</h3>
+    
+    <p>📍 {{ event[2] }}</p>
+
+    <p class="desc">
+        {{ event[0][:80] }}...
+    </p>
+
+    <a href="{{ event[3] }}" target="_blank" class="btn">
+        View Event
+    </a>
+
+</div>
+{% endfor %}
+
+</div>
+{% endif %}
+
+</body>
+</html>

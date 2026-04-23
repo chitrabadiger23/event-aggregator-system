@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Events</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #f5f5f5;
+}
+
+/* HERO */
+.hero {
+    width: 85%;
+    height: 70vh;
+    margin: 40px auto;
+    background: url("{{ url_for('static', filename='event.jpg') }}") center/cover no-repeat;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    border-radius: 20px;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 48px;
+}
+
+.desc {
+    margin-top: 10px;
+}
+
+/* EVENTS */
+.events-preview {
+    padding: 40px;
+    text-align: center;
+}
+
+.event-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    padding: 20px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    text-align: center;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.event-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.event-card h3 {
+    font-size: 18px;
+    padding: 10px;
+    color: #2c3e50;
+}
+
+.event-card p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.view-btn {
+    display: inline-block;
+    margin: 15px 0;
+    padding: 10px 18px;
+    background: #e74c3c;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.view-btn:hover {
+    background: #c0392b;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Discover Events Around You 🎉</h1>
+        <p class="desc">
+            Bengaluru is always buzzing with events. From live music 🎵 and stand-up comedy 🎤 
+            to creative workshops 🎨 and meetups 🤝—explore everything happening around you in one place.
+        </p>
+    </div>
+</section>
+
+<section class="events-preview">
+    <h2>Upcoming Events</h2>
+
+    <div class="event-container">
+    {% for event in events %}
+        <div class="event-card">
+
+            <!-- ✅ FIXED IMAGE -->
+            <img 
+            src="{% if event[4] and 'http' in event[4] %}{{ event[4] }}{% else %}{{ url_for('static', filename='default.jpg') }}{% endif %}"onerror="this.src='{{ url_for('static', filename='default.jpg') }}'">
+
+            <!-- ✅ FIXED TITLE -->
+            <h3>{{ event[0] }}</h3>
+            
+            <!-- ✅ FIXED LOCATION -->
+            {% if event[2] != "N/A" %}
+            <p>📍 {{ event[2] }}</p>
+            {% endif %}
+
+            <!-- ✅ FIXED LINK -->
+            <a href="{{ event[3] }}" target="_blank" class="view-btn">
+                View Event
+            </a>
+
+        </div>
+    {% endfor %}
+    </div>
+
+    <a href="/events">
+        <button style="padding:10px 20px;margin-top:20px;">Explore More 🚀</button>
+    </a>
+
+</section>
+
+</body>
+</html>
