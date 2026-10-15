@@ -3,3 +3,4 @@ selenium
 requests
 flask
 rapidfuzz
+gunicorn
