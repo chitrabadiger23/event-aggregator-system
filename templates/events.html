@@ -1,179 +1,856 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>Events</title>
 
-<style>
-body {
-    font-family: Arial;
-    background: #f4f4f4;
-    margin: 0;
-}
+    <title>Events</title>
 
-/* 🔥 TOP BAR */
-.top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-}
+    <style>
 
-/* FILTERS */
-.filters a {
-    margin-right: 10px;
-    padding: 10px 15px;
-    background: black;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-}
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            margin: 0;
+        }
 
-.filters a:hover {
-    background: skyblue;
-    color: black;
-}
+        /* =========================
+           TOP BAR
+        ========================= */
 
-/* SEARCH */
-.search-box input {
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid gray;
-}
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
 
-.search-box button {
-    padding: 8px 12px;
-    margin-left: 5px;
-    background: black;
-    color: white;
-    border: none;
-    border-radius: 6px;
-}
+        /* =========================
+           FILTERS
+        ========================= */
 
-/* GRID */
-.container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    padding: 20px;
-}
+        .filters a {
+            margin-right: 10px;
+            padding: 10px 15px;
+            background: black;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
 
-/* CARD */
-.card {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
+        .filters a:hover {
+            background: skyblue;
+            color: black;
+        }
 
-.card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
+        /* =========================
+           SEARCH
+        ========================= */
 
-.card h3 {
-    padding: 10px;
-}
+        .search-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
 
-.card p {
-    padding: 0 10px;
-    color: #555;
-}
+        .search-box form {
+            display: flex;
+            align-items: center;
+        }
 
-.desc {
-    font-size: 14px;
-    color: gray;
-    padding: 10px;
-}
+        .search-box input {
+            padding: 8px;
+            width: 320px;
+            border-radius: 6px;
+            border: 1px solid gray;
+            font-size: 14px;
+        }
 
-.btn {
-    display: block;
-    margin: 10px;
-    padding: 10px;
-    background: #e74c3c;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    border-radius: 8px;
-}
+        /* =========================
+           MICROPHONE
+        ========================= */
 
-/* MESSAGE */
-.no-data {
-    text-align: center;
-    font-size: 22px;
-    margin-top: 50px;
-}
+        .microphone {
+            font-size: 20px;
+            margin-left: 8px;
+            padding: 8px 10px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            line-height: 1;
+        }
 
-/* RESPONSIVE */
-@media (max-width: 900px) {
-    .container {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+        .microphone:hover {
+            background: #eeeeee;
+        }
 
-@media (max-width: 600px) {
-    .container {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
+        .microphone.listening {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* =========================
+           SEARCH BUTTON
+        ========================= */
+
+        .search-box button[type="submit"] {
+            padding: 8px 12px;
+            margin-left: 8px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .search-box button[type="submit"]:hover {
+            background: #333;
+        }
+
+        /* =========================
+           MAIN EVENT GRID
+        ========================= */
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* =========================
+           EVENT CARD
+        ========================= */
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .card h3 {
+            padding: 10px;
+            margin-bottom: 0;
+        }
+
+        .card p {
+            padding: 0 10px;
+            color: #555;
+        }
+
+        .desc {
+            font-size: 14px;
+            color: gray;
+            padding: 10px;
+        }
+
+        /* =========================
+           VIEW EVENT BUTTON
+        ========================= */
+
+        .btn {
+            display: block;
+            margin: 10px;
+            padding: 10px;
+            background: #e74c3c;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background: #d63d2f;
+        }
+
+        /* =========================
+           NO DATA
+        ========================= */
+
+        .no-data {
+            text-align: center;
+            font-size: 22px;
+            margin-top: 50px;
+        }
+
+        /* ==================================================
+           RECOMMENDATIONS
+        ================================================== */
+
+        .recommendations-section {
+            margin-top: 50px;
+            padding: 30px 20px;
+            border-top: 2px solid #ddd;
+        }
+
+        .recommendations-section h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .recommendation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .recommendation-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+
+        .recommendation-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .recommendation-content {
+            padding: 15px;
+        }
+
+        .category-name {
+            display: inline-block;
+            background: #eeeeee;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .recommendation-content h3 {
+            margin: 8px 0;
+            font-size: 20px;
+        }
+
+        .event-info {
+            color: #555;
+            margin: 8px 0;
+        }
+
+        /* =========================
+           FEEDBACK BUTTONS
+        ========================= */
+
+        .feedback-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .feedback-buttons form {
+            margin: 0;
+        }
+
+        .feedback-buttons button {
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .interested-btn {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .not-interested-btn {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .feedback-buttons button:hover {
+            opacity: 0.85;
+        }
+
+        /* =========================
+           RECOMMENDATION BUTTON
+        ========================= */
+
+        .recommendation-btn {
+            display: block;
+            margin-top: 15px;
+            padding: 10px;
+            background: #e74c3c;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .recommendation-btn:hover {
+            background: #d63d32;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .recommendation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .recommendation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-box {
+                align-items: center;
+                width: 100%;
+            }
+
+            .search-box form {
+                width: 100%;
+            }
+
+            .search-box input {
+                width: 90%;
+            }
+
+            .feedback-buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-<!-- 🔥 TOP BAR -->
+
+<!-- ==================================================
+     TOP BAR
+================================================== -->
+
 <div class="top-bar">
 
-    <!-- LEFT FILTER -->
+
+    <!-- FILTERS -->
+
     <div class="filters">
-        <a href="/events">All</a>
-        <a href="/events?filter=tomorrow">Tomorrow</a>
-        <a href="/events?filter=week">This Week</a>
-        <a href="/events?filter=month">This Month</a>
+
+        <a href="/events">
+            All
+        </a>
+
+        <a href="/events?filter=tomorrow">
+            Tomorrow
+        </a>
+
+        <a href="/events?filter=week">
+            This Week
+        </a>
+
+        <a href="/events?filter=month">
+            This Month
+        </a>
+
     </div>
 
-    <!-- RIGHT SEARCH -->
+
+    <!-- SEARCH -->
+
     <div class="search-box">
+
         <form method="GET" action="/events">
-            <input type="text" name="search" placeholder="Search events...">
 
-            <!-- 🔥 KEEP FILTER -->
-            <input type="hidden" name="filter" value="{{ request.args.get('filter', '') }}">
+            <input
+                type="text"
+                id="searchInput"
+                name="search"
+                placeholder="Search events..."
+                value="{{ request.args.get('search', '') }}"
+            >
 
-            <button type="submit">Search</button>
+            <!-- MICROPHONE -->
+
+            <button
+                type="button"
+                id="micButton"
+                class="microphone"
+                title="Voice Search"
+            >
+                🎤
+            </button>
+
+            <input
+                type="hidden"
+                name="filter"
+                value="{{ request.args.get('filter', '') }}"
+            >
+
+            <button type="submit">
+                Search
+            </button>
+
         </form>
+
     </div>
+
 
 </div>
 
-<!-- 🔥 EVENTS -->
+
+<!-- ==================================================
+     SEARCH RESULTS
+================================================== -->
+
 {% if events|length == 0 %}
-    <div class="no-data">No events found 😔</div>
+
+    <div class="no-data">
+
+        No events found 😔
+
+    </div>
+
 {% else %}
+
+
 <div class="container">
 
-{% for event in events %}
-<div class="card">
 
-    <img src="{{ event[4] if event[4] else '/static/default.jpg' }}">
+    {% for event in events %}
 
-    <h3>{{ event[0] }}</h3>
-    
-    <p>📍 {{ event[2] }}</p>
 
-    <p class="desc">
-        {{ event[0][:80] }}...
-    </p>
+    <div class="card">
 
-    <a href="{{ event[3] }}" target="_blank" class="btn">
-        View Event
-    </a>
+
+        <img
+            src="{{ event[4] if event[4] else '/static/default.jpg' }}"
+            alt="{{ event[0] }}"
+        >
+
+
+        <h3>
+            {{ event[0] }}
+        </h3>
+
+
+        <p>
+            📍 {{ event[2] }}
+        </p>
+
+
+        <p class="desc">
+            {{ event[0][:80] }}...
+        </p>
+
+
+        <a
+            href="{{ event[3] }}"
+            target="_blank"
+            class="btn"
+        >
+            View Event
+        </a>
+
+
+    </div>
+
+
+    {% endfor %}
+
 
 </div>
-{% endfor %}
 
-</div>
+
 {% endif %}
 
+
+
+<!-- ==================================================
+     PERSONALIZED RECOMMENDATIONS
+================================================== -->
+
+{% if recommended_events %}
+
+
+<section class="recommendations-section">
+
+
+    <h2>
+        ✨ Recommended For You
+    </h2>
+
+
+    <div class="recommendation-grid">
+
+
+        {% for event in recommended_events %}
+
+
+        <div class="recommendation-card">
+
+
+            <!-- IMAGE -->
+
+            <img
+                src="{{ event.image if event.image else '/static/default.jpg' }}"
+                alt="{{ event.title }}"
+            >
+
+
+            <div class="recommendation-content">
+
+
+                <!-- CATEGORY -->
+
+                <span class="category-name">
+                    {{ event.category or "Event" }}
+                </span>
+
+
+                <!-- TITLE -->
+
+                <h3>
+                    {{ event.title }}
+                </h3>
+
+
+                <!-- DATE -->
+
+                {% if event.date %}
+
+                <p class="event-info">
+                    📅 {{ event.date[:10] }}
+                </p>
+
+                {% endif %}
+
+
+                <!-- TIME -->
+
+                {% if event.time %}
+
+                <p class="event-info">
+                    🕒 {{ event.time }}
+                </p>
+
+                {% endif %}
+
+
+                <!-- VENUE -->
+
+                {% if event.venue %}
+
+                <p class="event-info">
+                    📍 {{ event.venue }}
+                </p>
+
+                {% endif %}
+
+
+                <!-- CITY -->
+
+                {% if event.city %}
+
+                <p class="event-info">
+                    📍 {{ event.city }}
+                </p>
+
+                {% endif %}
+
+
+                <!-- FEEDBACK BUTTONS -->
+
+                <div class="feedback-buttons">
+
+
+                    <!-- INTERESTED -->
+
+                    <form
+                        action="/feedback"
+                        method="POST"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="event_id"
+                            value="{{ event.id }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="feedback"
+                            value="interested"
+                        >
+
+                        <button
+                            type="submit"
+                            class="interested-btn"
+                        >
+                            👍 Interested
+                        </button>
+
+                    </form>
+
+
+                    <!-- NOT INTERESTED -->
+
+                    <form
+                        action="/feedback"
+                        method="POST"
+                    >
+
+                        <input
+                            type="hidden"
+                            name="event_id"
+                            value="{{ event.id }}"
+                        >
+
+                        <input
+                            type="hidden"
+                            name="feedback"
+                            value="not_interested"
+                        >
+
+                        <button
+                            type="submit"
+                            class="not-interested-btn"
+                        >
+                            👎 Not Interested
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+
+                <!-- VIEW EVENT -->
+
+                <a
+                    href="{{ event.link }}"
+                    target="_blank"
+                    class="recommendation-btn"
+                >
+                    View Event
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% endfor %}
+
+
+    </div>
+
+
+</section>
+
+
+{% endif %}
+
+
+<!-- ==================================================
+     VOICE SEARCH JAVASCRIPT
+================================================== -->
+
+<script>
+
+    const micButton = document.getElementById("micButton");
+    const searchInput = document.getElementById("searchInput");
+
+    /*
+       Chrome supports:
+       window.SpeechRecognition
+       or
+       window.webkitSpeechRecognition
+    */
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    /*
+       Check browser support
+    */
+
+    if (!SpeechRecognition) {
+
+        micButton.addEventListener("click", function () {
+
+            alert(
+                "Voice search is not supported in this browser. Please use Google Chrome."
+            );
+
+        });
+
+    } else {
+
+        const recognition = new SpeechRecognition();
+
+
+        /*
+           Indian English
+        */
+
+        recognition.lang = "en-IN";
+
+
+        /*
+           Stop automatically after
+           the user finishes speaking
+        */
+
+        recognition.continuous = false;
+
+
+        /*
+           Return final speech result
+        */
+
+        recognition.interimResults = false;
+
+
+        /*
+           MICROPHONE CLICK
+        */
+
+        micButton.addEventListener("click", function () {
+
+            try {
+
+                recognition.start();
+
+                micButton.classList.add("listening");
+
+                micButton.innerHTML = "🔴";
+
+                micButton.title = "Listening...";
+
+            } catch (error) {
+
+                console.log(
+                    "Microphone is already running."
+                );
+
+            }
+
+        });
+
+
+        /*
+           SPEECH RESULT
+        */
+
+        recognition.onresult = function(event) {
+
+            const speechText =
+                event.results[0][0].transcript;
+
+
+            /*
+               Put spoken words
+               into search box
+            */
+
+            searchInput.value = speechText;
+
+
+            console.log(
+                "Voice input:",
+                speechText
+            );
+
+        };
+
+
+        /*
+           LISTENING FINISHED
+        */
+
+        recognition.onend = function() {
+
+            micButton.classList.remove("listening");
+
+            micButton.innerHTML = "🎤";
+
+            micButton.title = "Voice Search";
+
+        };
+
+
+        /*
+           ERROR HANDLING
+        */
+
+        recognition.onerror = function(event) {
+
+            micButton.classList.remove("listening");
+
+            micButton.innerHTML = "🎤";
+
+            micButton.title = "Voice Search";
+
+
+            console.log(
+                "Speech recognition error:",
+                event.error
+            );
+
+
+            if (event.error === "not-allowed") {
+
+                alert(
+                    "Microphone permission was denied. Please allow microphone access in Chrome."
+                );
+
+            }
+
+
+            else if (event.error === "no-speech") {
+
+                console.log(
+                    "No speech detected. Please try again."
+                );
+
+            }
+
+        };
+
+    }
+
+</script>
+
+
 </body>
+
 </html>
